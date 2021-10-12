@@ -22,6 +22,10 @@ class UserController extends Controller
         $attributes = $request->validated();
         $user = User::create($attributes);
         $access_token = $user->createToken('Personal Access Token')->accessToken;
+//        if($user != null)
+//        {
+//
+//        }
         return response()->json(['token' => $access_token]);
     }
 
