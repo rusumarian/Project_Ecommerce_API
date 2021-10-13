@@ -22,10 +22,6 @@ class UserController extends Controller
         $attributes = $request->validated();
         $user = User::create($attributes);
         $access_token = $user->createToken('Personal Access Token')->accessToken;
-//        if($user != null)
-//        {
-//
-//        }
         return response()->json(['token' => $access_token]);
     }
 
@@ -35,7 +31,7 @@ class UserController extends Controller
     public function login(LoginRequest $request)
     {
         $attributes = $request->validated();
-        if(auth()->attempt($attributes))
+        if(auth()->attempt($attributes) && $request->user()->email_verified_at != null)
         {
             $user_token = auth()->user()->createToken('Personal Access Token')->accessToken;
             return response()->json(['token' => $user_token]);
