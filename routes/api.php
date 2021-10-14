@@ -32,3 +32,10 @@ Route::get('verified-only', function(Request $request){
     // Routes for Registration Verification Email
     Route::get('email/resend','VerificationController@resend')->name('verification.resend');
     Route::get('email/verify/{id}/{hash}','VerificationController@verify')->name('verification.verify');
+
+    //Admin Panel
+    Route::middleware(['auth:api','admin'])->group(function () {
+        Route::get('admin',function (){
+           return 'You are the best';
+        });
+    });
