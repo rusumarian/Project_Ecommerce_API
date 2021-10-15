@@ -14,15 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return 'Help';
-});
-
-Route::get('verified-only', function(Request $request){
-   dd('you are verified', $request->user()->first_name);
-})->middleware('auth:api', 'verified');
-
-
     // Routes for Auth - Module
     Route::post('login', 'UserController@login');
     Route::post('register', 'UserController@register');
@@ -35,7 +26,5 @@ Route::get('verified-only', function(Request $request){
 
     //Admin Panel
     Route::middleware(['auth:api','admin'])->group(function () {
-        Route::get('admin',function (){
-           return 'You are the best';
-        });
+        Route::resource('category','ProductCategoryController')->except('create', 'edit');
     });
