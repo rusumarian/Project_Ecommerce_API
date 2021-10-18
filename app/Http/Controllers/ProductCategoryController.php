@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers;
 
 use App\Models\ProductCategory;
 use Illuminate\Http\JsonResponse;
@@ -19,17 +17,6 @@ class ProductCategoryController extends Controller
         $categories = collect(ProductCategory::all());
         return response()->json(compact('categories'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -53,16 +40,6 @@ class ProductCategoryController extends Controller
         return response()->json(ProductCategory::where('slug', $slug)->get());
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -74,8 +51,8 @@ class ProductCategoryController extends Controller
     public function update(Request $request, $id)
     {
         $category = ProductCategory::findOrFail($id);
-        $attrtibutes = $request->all();
-        $category->update($attrtibutes);
+        $attributes = $request->all();
+        $category->update($attributes);
         return response()->json($category);
     }
 

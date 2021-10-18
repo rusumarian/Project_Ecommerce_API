@@ -12,4 +12,9 @@ class ProductCategory extends Model
         'name',
         'slug'
     ];
+    public function product()
+    {
+        //hasOne, hasMany, belongsTo, belongsToMany
+        return $this->hasMany(Product::class);
+    }
 }
