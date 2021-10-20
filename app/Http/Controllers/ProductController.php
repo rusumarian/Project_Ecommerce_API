@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProductRegisterRequest;
-use App\Http\Requests\ProductUpdateRequest;
+use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -19,8 +18,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = collect(Product::all());
-        return response()->json(compact('products'));
+        return response()->json(Product::all());
     }
 
     /**
@@ -29,32 +27,14 @@ class ProductController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function store(ProductRegisterRequest $request)
+    public function store(ProductRequest $request)
     {
         $attributes = $request->validated();
-        $attributes['slug'] = Str::slug($attributes['title'], '-');
-        if($attributes['quantity'] > 0)
-        {
-            $attributes['in stock'] = `1`;
-        }
-        else
-        {
-            $attributes['in stock'] = `0`;
-        }
+        $attributes['in_stock'] = $attributes['quantity'] > 0 ? 1 : 0;
         $product = Product::create($attributes);
         return response()->json($product);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return JsonResponse
-     */
-    public function show($slug)
-    {
-        return response()->json(Product::where('slug', $slug)->get());
-    }
 
     /**
      * Update the specified resource in storage.
@@ -63,19 +43,11 @@ class ProductController extends Controller
      * @param  int  $id
      * @return JsonResponse
      */
-    public function update(ProductUpdateRequest $request, $id)
+    public function update(ProductRequest $request, $id)
     {
         $product = Product::findOrFail($id);
         $attributes = $request->validated();
-        $attributes['slug'] = Str::slug($attributes['title'], '-');
-        if($attributes['quantity'] > 0)
-        {
-            $attributes['in stock'] = true;
-        }
-        else
-        {
-            $attributes['in stock'] = false;
-        }
+        $attributes['in_stock'] = $attributes['quantity'] > 0 ? 1 : 0;
         $product->update($attributes);
         return response()->json($product);
     }

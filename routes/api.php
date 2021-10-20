@@ -26,6 +26,6 @@ use Illuminate\Support\Facades\Route;
 
     //Admin Panel
     Route::middleware(['auth:api','admin'])->group(function () {
-        Route::resource('category','ProductCategoryController')->except('create', 'edit');
-        Route::resource('product','ProductController')->except('create', 'edit');
+        Route::resource('category','ProductCategoryController')->except('create', 'edit', 'show');
+        Route::resource('product','ProductController')->except('create', 'edit', 'show');
     });

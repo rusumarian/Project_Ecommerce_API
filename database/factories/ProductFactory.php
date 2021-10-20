@@ -25,11 +25,10 @@ class ProductFactory extends Factory
         return [
             'category_id' => ProductCategory::factory(),
             'title' => $this->faker->word(),
-            'slug' => $this->faker->slug(),
             'description' => $this->faker->text(),
             'price' => $this->faker->numberBetween(1,999),
             'color' => $this->faker->colorName(),
-            'quantity' => $this->faker->randomNumber()
+            'quantity' => $this->faker->numberBetween(0, 9999)
         ];
     }
 }
