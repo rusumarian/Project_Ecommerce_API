@@ -18,7 +18,16 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return response()->json(Product::all());
+        $product = Product::latest()->filter(request([
+            'search',
+            'in-stock',
+            'out-of-stock',
+            'price-min',
+            'price-max',
+            'category',
+            'color'
+        ]))->get();
+        return response()->json($product);
     }
 
     /**
