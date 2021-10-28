@@ -39,6 +39,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->attributes['password'] = bcrypt($password);
     }
+    public function cart()
+    {
+        //hasOne, hasMany, belongsTo, belongsToMany
+        return $this->hasOne(Cart::class);
+    }
 
     /**
      * The attributes that should be cast.

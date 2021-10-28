@@ -24,8 +24,9 @@ use Illuminate\Support\Facades\Route;
     Route::get('email/resend','VerificationController@resend')->name('verification.resend');
     Route::get('email/verify/{id}/{hash}','VerificationController@verify')->name('verification.verify');
 
-    //Admin Panel
+    //Admin Panel - de s
     Route::middleware(['auth:api','admin'])->group(function () {
         Route::resource('category','ProductCategoryController')->except('create', 'edit', 'show');
         Route::resource('product','ProductController')->except('create', 'edit', 'show');
+        Route::post('add-to-cart', 'CartController@addtocart');
     });
