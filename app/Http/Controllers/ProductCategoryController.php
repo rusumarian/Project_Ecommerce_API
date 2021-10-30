@@ -1,11 +1,10 @@
-<?php
-
-namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers;
 
 use App\Models\ProductCategory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\Rule;
 
 class ProductCategoryController extends Controller
 {
@@ -16,20 +15,8 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        $categories = collect(ProductCategory::all());
-        return response()->json(compact('categories'));
+        return response()->json(ProductCategory::all());
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -38,30 +25,9 @@ class ProductCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $category = ProductCategory::create($request->all());
+        $validated = $request->validate(['name' => ['required','string','max:255','unique:product_categories,name']]);
+        $category = ProductCategory::create($validated);
         return response()->json($category);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return JsonResponse
-     */
-    public function show($slug)
-    {
-        return response()->json(ProductCategory::where('slug', $slug)->get());
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -74,8 +40,8 @@ class ProductCategoryController extends Controller
     public function update(Request $request, $id)
     {
         $category = ProductCategory::findOrFail($id);
-        $attrtibutes = $request->all();
-        $category->update($attrtibutes);
+        $validated = $request->validate(['name' => ['required','max:255','string']]);
+        $category->update($validated);
         return response()->json($category);
     }
 

@@ -3,7 +3,7 @@
 use App\Models\ProductCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class CategoryFactory extends Factory
+class ProductCategoryFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -20,8 +20,7 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
-            'name'=>$this->faker->word(),
-            'slug'=>$this->faker->slug()
+            'name'=>$this->faker->word()
         ];
     }
 }
